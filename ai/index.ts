@@ -1,0 +1,1 @@
+export {genAImodel} from './ai.config.ts'
