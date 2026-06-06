@@ -4,6 +4,7 @@ export type ActionType =
     | 'file_modify'
     | 'file_delete'
     | 'folder_update'
+    | 'folder_create'
     | 'code_analysis'
     | 'tool_execute'
     | 'web_search'
@@ -15,6 +16,11 @@ export interface Actionlogs {
     timestamp: Date;
     type: ActionType;
     path: string;
+    status: ActionStatus;
+    userApproved?: boolean;
+    input: string;
+    output?: string;
+    error?: string;
     details: {
         before?: string;
         after?: string;
@@ -23,11 +29,7 @@ export interface Actionlogs {
         error?: string;
         command?: string;
     }
-    status: ActionStatus;
-    userApproved?: boolean;
-    input: string;
-    output?: string;
-    error?: string;
+    
 }
 
 export interface AgentConfig {
@@ -35,6 +37,7 @@ export interface AgentConfig {
     maxFileSizeToRead: number;
     excludePatterns: string[];
     tools: {
+        allowfileCreation: boolean;
         allowshellExecution: boolean;
         allowFileModification: boolean;
         allowWebSearch: boolean;
@@ -72,4 +75,4 @@ export function isMutationType(t: ActionType): boolean {
         t === 'file_delete' ||
         t === 'folder_update' ||
         t === 'tool_execute'
-    )
+    )}
