@@ -13,19 +13,19 @@ export async function runCliMode() {
                 { value: "back", label: "Back to Main Menu" }
             ]
         })
-        if (isCancel(mode) || mode === 'back') {
+        if (mode === "agent") {
+            console.log("Agent Mode Activated");
+            await runAgentMode();
+        }
+        else if (isCancel(mode) || mode === 'back') {
             // console.log(chalk.red("Operation cancelled. Exiting..."));
             return runwakeup();
         }
-        if (mode === "agent") {
-            console.log("Agent Mode Activated");
-            return runAgentMode();
-        }
-        if (mode === "plan") {
+        else if (mode === "plan") {
             console.log("Plan");
 
         }
-        if (mode === "ask") {
+        else if (mode === "ask") {
             console.log("Ask");
 
         }

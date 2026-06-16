@@ -10,7 +10,7 @@ export type ActionType =
     | 'web_search'
     | 'api_call'
 
-export type ActionStatus = 'pending' | 'in_progress' | 'completed' | 'failed';
+export type ActionStatus = 'pending' | 'executed' | 'approved' | 'rejected';
 export interface Actionlogs {
     id: string;
     timestamp: Date;
@@ -18,7 +18,7 @@ export interface Actionlogs {
     path: string;
     status: ActionStatus;
     userApproved?: boolean;
-    input: string;
+    input?: string;
     output?: string;
     error?: string;
     details: {
@@ -61,9 +61,9 @@ export const defaultAgentConfig = (): AgentConfig => ({
     ],
 
     tools: {
-        allowShellExecution: true,
+        allowshellExecution: true,
         allowFileModification: true,
-        allowFileCreation: true,
+        allowfileCreation: true,
         allowFolderCreation: true,
     }
 });

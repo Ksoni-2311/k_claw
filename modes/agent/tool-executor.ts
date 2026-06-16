@@ -95,7 +95,7 @@ export class ToolExecutor {
       type:'code_analysis',
       path:this.norm(rel),
       details:{after:text,toolName:'read_file'},
-      status:'completed'
+      status:'approved'
     })
     return text;
   }
@@ -193,7 +193,7 @@ export class ToolExecutor {
     type:"code_analysis",
     path:this.norm(rel),
     details:{after:out,toolName:"list_files"},
-    status:"completed",
+    status:"approved",
   })
   return out || "(empty)"
   }
@@ -288,7 +288,7 @@ export class ToolExecutor {
       type:"code_analysis",
       path: "skills",
       details: { after: out || "(none)", toolName: "list_skills" },
-      status:"completed",
+      status:"approved",
     });
     return out || "(none)";
   }
@@ -307,7 +307,7 @@ export class ToolExecutor {
       type: "code_analysis",
       path: abs,
       details: { after: text, toolName: "read_skill" },
-      status: "in_progress",
+      status: "executed",
     });
     return text;
   }
@@ -317,7 +317,7 @@ export class ToolExecutor {
     const all = [...this.tracker.getActions()];
 
     for (const a of all.filter(
-      (x) => x.type === "folder_create" && x.status === "completed",
+      (x) => x.type === "folder_create" && x.status === "approved",
     )) {
       try {
         fs.mkdirSync(this.resolveSafe(a.path), { recursive: true });
@@ -332,7 +332,7 @@ export class ToolExecutor {
           (a.type === "file_create" ||
             a.type === "file_modify" ||
             a.type === "file_delete") &&
-          a.status === "completed",
+          a.status === "approved",
       )
       .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
 
@@ -354,7 +354,7 @@ export class ToolExecutor {
     }
 
     for (const a of all.filter(
-      (x) => x.type === "tool_execute" && x.status==="completed",
+      (x) => x.type === "tool_execute" && x.status==="approved",
     )) {
       const cmd = a.details.command;
       if (!cmd) continue;
