@@ -60,7 +60,6 @@ return groups;
 
 export async function runApprovalFlow(tracker:ActionTracker):Promise<boolean>{
     const pending=tracker.getPendingMutations();
-    // console.log("bsdk"+pending);
     if(pending.length ===0){
         console.log(
             chalk.dim('\nNo staged changes found in file or folder to review ')

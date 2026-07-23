@@ -1,40 +1,40 @@
-import {tool} from 'ai'
-import {z} from 'zod'
+import { tool } from 'ai'
+import { z } from 'zod'
 import type { ToolExecutor } from './tool-executor'
 
-export function createAgentTools(executor:ToolExecutor){
-    return{
-        read_file:tool({
-            description:"Read the text file from workspace . Use a path relative  to the project root.",
-            inputSchema:z.object({
-                path:z.string().describe("Relative file path")
-            }),
-            execute:async({path:p})=>executor.readFile(p)
-        }),
-        createFile:tool({
-            description:"Stage creation of a new file (do not append till approval by user)",
-            inputSchema:z.object({
-                path:z.string(),
-                content:z.string(),
-            }),
-            execute:async ({path : p,content})=>executor.createFile(p,content)
-        }),
-        modifyFile:tool({
-            description:"Stage full file replacement for existing file(pending approvals).",
-            inputSchema:z.object({
-                path:z.string(),
-                content:z.string().describe('Complete new file contents'),
-            }),
-            execute:async ({path : p,content})=>executor.modifyFile(p,content)
-        }),
-        deleteFile:tool({
-            description:"Stage deletion of file (pending approvals).",
-            inputSchema:z.object({
-                path:z.string(),
-            }),
-            execute:async ({path : p})=>executor.deleteFile(p)
-        }),
-        create_folder: tool({
+export function createAgentTools(executor: ToolExecutor) {
+  return {
+    read_file: tool({
+      description: "Read the text file from workspace . Use a path relative  to the project root.",
+      inputSchema: z.object({
+        path: z.string().describe("Relative file path")
+      }),
+      execute: async ({ path: p }) => executor.readFile(p)
+    }),
+    createFile: tool({
+      description: "Stage creation of a new file (do not append till approval by user)",
+      inputSchema: z.object({
+        path: z.string(),
+        content: z.string(),
+      }),
+      execute: async ({ path: p, content }) => executor.createFile(p, content)
+    }),
+    modifyFile: tool({
+      description: "Stage full file replacement for existing file(pending approvals).",
+      inputSchema: z.object({
+        path: z.string(),
+        content: z.string().describe('Complete new file contents'),
+      }),
+      execute: async ({ path: p, content }) => executor.modifyFile(p, content)
+    }),
+    deleteFile: tool({
+      description: "Stage deletion of file (pending approvals).",
+      inputSchema: z.object({
+        path: z.string(),
+      }),
+      execute: async ({ path: p }) => executor.deleteFile(p)
+    }),
+    create_folder: tool({
       description:
         "Stage creation of a directory tree (pending approval). Uses mkdir -p on apply.",
       inputSchema: z.object({
@@ -100,5 +100,5 @@ export function createAgentTools(executor:ToolExecutor){
       }),
       execute: async ({ path: p }) => executor.readSkill(p),
     }),
-    }
+  }
 }

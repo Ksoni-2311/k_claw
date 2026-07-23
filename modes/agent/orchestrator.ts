@@ -49,7 +49,6 @@ export async function runAgentMode() {
     if (result.text?.trim()) console.log(renderTerminalMarkdown(result.text));
     const ok = await runApprovalFlow(tracker);
     if (!ok) return executor.clearStaging()
-
     const { errors } = executor.applyApprovedFromTracker();
     if (errors.length) {
         console.log(chalk.red("\nSome operations reported error:\n"));
